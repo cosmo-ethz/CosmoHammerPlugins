@@ -1,0 +1,20 @@
+--- WMAP_7yr_options.F90	2012-11-22 16:41:19.500930807 +0100
++++ WMAP_7yr_options2.F90	2012-11-22 16:44:16.626704033 +0100
+@@ -9,7 +9,7 @@
+ ! location of input data
+ ! ---------------------------------------------------
+ 	 
+-  character(len=*), parameter :: WMAP_data_dir = 'data/'
++  character(len=512) :: WMAP_data_dir = 'data/'
+ 
+ 
+ 
+@@ -102,7 +102,7 @@
+ !
+ ! gibbs_first_iteration must be >= 1
+ 
+-character(len=*), parameter :: gibbs_sigma_filename = WMAP_data_dir//'lowlT/gibbs/sigmaEllsHkeChu_run4_kq85.fits'
++character(len=512) :: gibbs_sigma_filename = 'lowlT/gibbs/sigmaEllsHkeChu_run4_kq85.fits'
+ integer :: gibbs_first_iteration = 10
+ integer :: gibbs_last_iteration = 120000
+ integer :: gibbs_skip = 2

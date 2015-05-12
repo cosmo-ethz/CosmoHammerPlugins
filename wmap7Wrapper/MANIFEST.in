@@ -1,0 +1,2 @@
+include README.rst LICENSE _wmapWrapper.pyf test/lensedcls.dat get_wmap.sh get_wmap_sw.sh WMAP_7yr_options.diff
+exclude .settings/* .pydevproject .cproject .project likelihood_v4p1/*

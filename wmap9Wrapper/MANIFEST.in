@@ -1,0 +1,13 @@
+include README.rst 
+include LICENSE 
+include _wmapWrapper.pyf 
+include test/lensedcls.dat 
+include get_wmap.sh 
+include get_wmap_sw.sh
+include test/*
+
+exclude .settings/* 
+exclude .pydevproject 
+exclude .cproject 
+exclude .project 
+exclude wmap_likelihood_v5/*

@@ -1,0 +1,19 @@
+*** wmap_likelihoodcode_v2p2p2/WMAP_3yr_teeebb_pixlike.F90	2013-09-02 17:14:54.779861704 +0200
+--- WMAP_3yr_teeebb_pixlike.F90	2013-09-02 17:15:18.671561345 +0200
+***************
+*** 60,66 ****
+    REAL, dimension(:),allocatable :: T,N,Mask_R3
+    CHARACTER(len=3) :: da(10),sband
+    INTEGER :: ReadStatus
+!   CHARACTER(len=128) :: qfile,ufile,maskfile,filename(0:9),eebbdir
+  
+    INTEGER :: dum,nsmax,nlmax,l,ip,jp,m,lun,stat,i,j,k
+    REAL, allocatable, dimension(:,:), Target :: NinvQUr3
+--- 60,66 ----
+    REAL, dimension(:),allocatable :: T,N,Mask_R3
+    CHARACTER(len=3) :: da(10),sband
+    INTEGER :: ReadStatus
+!   CHARACTER(len=512) :: qfile,ufile,maskfile,filename(0:9),eebbdir
+  
+    INTEGER :: dum,nsmax,nlmax,l,ip,jp,m,lun,stat,i,j,k
+    REAL, allocatable, dimension(:,:), Target :: NinvQUr3

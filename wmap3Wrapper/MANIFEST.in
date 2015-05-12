@@ -1,0 +1,2 @@
+include README.rst LICENSE _wmapWrapper.pyf test/lensedcls.dat get_wmap.sh get_wmap_sw.sh WMAP_3yr_likelihood.diff WMAP_3yr_options.diff WMAP_3yr_tt_pixlike.diff
+exclude .settings/* .pydevproject .project wmap_likelihoodcode_v2p2p2/* *.F90

@@ -1,0 +1,19 @@
+*** wmap_likelihoodcode_v2p2p2/WMAP_3yr_likelihood.F90	2006-11-17 21:47:53.000000000 +0100
+--- WMAP_3yr_likelihood.F90	2013-09-04 16:54:37.317914113 +0200
+***************
+*** 57,63 ****
+    INTEGER  :: l,ll
+    integer  :: il,ill,i,j
+    REAL(8)  :: dummy
+!   CHARACTER(LEN=240) :: ttfilename,tefilename,ttofffilename,teofffilename
+    LOGICAL  :: good
+    integer ::  lun
+  
+--- 57,63 ----
+    INTEGER  :: l,ll
+    integer  :: il,ill,i,j
+    REAL(8)  :: dummy
+!   CHARACTER(LEN=512) :: ttfilename,tefilename,ttofffilename,teofffilename
+    LOGICAL  :: good
+    integer ::  lun
+  

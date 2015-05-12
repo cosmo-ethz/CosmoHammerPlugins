@@ -1,0 +1,106 @@
+*** Makefile	2006-11-17 21:47:53.000000000 +0100
+--- wmap_likelihoodcode_v2p2p2/Makefile	2013-09-02 15:32:47.676889821 +0200
+***************
+*** 1,11 ****
+  #Makefile --- WMAP Likelihood code...
+  
+  #CFITSIO=/usr/local
+! CFITSIO=/home/nolta/local
+  
+  #
+  #			Non-test object files.
+  #
+  OBJS = read_archive_map.o \
+         read_fits.o \
+         WMAP_3yr_options.o \
+--- 1,12 ----
+  #Makefile --- WMAP Likelihood code...
+  
+  #CFITSIO=/usr/local
+! CFITSIO=/home/ubuntu/cfitsio
+  
+  #
+  #			Non-test object files.
+  #
++ WMAPLIB = libwmap3.a
+  OBJS = read_archive_map.o \
+         read_fits.o \
+         WMAP_3yr_options.o \
+***************
+*** 40,49 ****
+  #LIBS   = -L. -L$(CFITSIO)/lib -lcfitsio -lscs_mp
+  
+  ## CITA McKenzie
+! F90     = ifort
+! FFLAGS  = -O $(WMAPFLAGS)
+! INCS    = -I. -I$(CFITSIO)/include
+! LIBS    = -L. -L$(CFITSIO)/lib -lcfitsio -llapack -L$(MCKENZIE_GOTO_LIB_PATH) -lgoto -lpthread
+  
+  ## NAG
+  #F90	 = f95
+--- 41,55 ----
+  #LIBS   = -L. -L$(CFITSIO)/lib -lcfitsio -lscs_mp
+  
+  ## CITA McKenzie
+! MKLLIBS=${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a
+! LAPACK=-L${MKLROOT} -Wl,--start-group  ${MKLLIBS} -Wl,--end-group -lpthread 
+! 
+! F90    = ifort
+! FFLAGS = -O $(WMAPFLAGS)
+! INCS   = -I. -I$(CFITSIO)/include
+! #LIBS   = -L. -L$(CFITSIO)/lib -lcfitsio -lscs_mp -lpthread
+! #LIBS   = -L. -L$(CFITSIO)/lib -lcfitsio -L/home/ubuntu/intel/mkl/include -lmkl_lapack -lmkl -lpthread
+! LIBS   = -L. -L$(CFITSIO)/lib -lcfitsio -openmp $(LAPACK)
+  
+  ## NAG
+  #F90	 = f95
+***************
+*** 78,91 ****
+  #
+  #			Rules.
+  #
+! all: test
+! 
+! test: $(OBJS) test.o
+! 	$(F90) $(FFLAGS) -o $@ $(OBJS) test.o $(LIBS)
+  
+  check: test
+! 	./test | tee output.log
+! 	$(DIFF) output.log output.std
+  
+  %.o: %.f90
+  	$(F90) $(FFLAGS) $(INCS) -c -o $@ $<
+--- 84,99 ----
+  #
+  #			Rules.
+  #
+! all: $(WMAPLIB) test
+  
+  check: test
+! 	./test
+! 
+! $(WMAPLIB): $(OBJS)
+! 	ar r $@ $^
+! 
+! test: $(OBJS) test.o
+! 	$(F90) $(FFLAGS) -o $@ test.o $(OBJS) $(LIBS)
+  
+  %.o: %.f90
+  	$(F90) $(FFLAGS) $(INCS) -c -o $@ $<
+***************
+*** 94,100 ****
+  	$(F90) $(FFLAGS) $(INCS) -c -o $@ $<
+  
+  clean:
+! 	$(RM) *.o *.mod *.log *~
+  
+  distclean: clean
+  	$(RM) test
+--- 102,108 ----
+  	$(F90) $(FFLAGS) $(INCS) -c -o $@ $<
+  
+  clean:
+! 	$(RM) *.o *.mod *.log *~ *.a test
+  
+  distclean: clean
+  	$(RM) test

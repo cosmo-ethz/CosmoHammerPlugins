@@ -1,0 +1,29 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module _wmapWrapper ! in 
+    interface  ! in :wmapwrapper
+        module wmapwrapper ! in :wmapwrapper:source/WmapWrapper.f90
+            use wmapwrappercore
+
+            subroutine computewmaplikelihood(cl_tt,cl_te,cl_ee,cl_bb, lmax, likelihood) ! in :wmapwrapper:source/WmapWrapper.f90:wmapwrapper
+                real(kind=8) dimension(lmax - 1),intent(in) :: cl_tt
+                real(kind=8) dimension(lmax - 1),depend(lmax),intent(in) :: cl_te
+                real(kind=8) dimension(lmax - 1),depend(lmax),intent(in) :: cl_ee
+                real(kind=8) dimension(lmax - 1),depend(lmax),intent(in) :: cl_bb
+                integer, optional,check((len(cl_tt)+1)>=lmax),depend(cl_tt) :: lmax=(len(cl_tt)+1)
+                
+                real(kind=8) intent(out) :: likelihood
+
+            end subroutine computewmaplikelihood
+
+            subroutine setupparams(wmapdatadir) ! in :wmapwrapper:source/WmapWrapper.f90:wmapwrapper
+                character*1024 intent(in) :: wmapdatadir
+            end subroutine setupparams
+
+        end module wmapwrapper
+    end interface 
+end python module wmapwrapper
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

@@ -1,0 +1,19 @@
+*** wmap_likelihoodcode_v2p2p2/WMAP_3yr_tt_pixlike.F90	2006-11-17 21:47:53.000000000 +0100
+--- WMAP_3yr_tt_pixlike.F90	2013-09-04 16:50:36.496941642 +0200
+***************
+*** 76,82 ****
+      integer :: ires != 4           ! resolution for low l TT code
+      INTEGER :: npix,np,status,nlmax,m, lun
+      INTEGER :: ip,jp,ipix,l,ll,jpix
+!     CHARACTER(len=120) :: filename(0:6), ifn, ofn
+      LOGICAL :: exist
+      INTEGER, ALLOCATABLE, dimension(:) :: good
+      REAL, ALLOCATABLE, dimension(:) :: dummy,ilc,vband,mask
+--- 76,82 ----
+      integer :: ires != 4           ! resolution for low l TT code
+      INTEGER :: npix,np,status,nlmax,m, lun
+      INTEGER :: ip,jp,ipix,l,ll,jpix
+!     CHARACTER(len=512) :: filename(0:6), ifn, ofn
+      LOGICAL :: exist
+      INTEGER, ALLOCATABLE, dimension(:) :: good
+      REAL, ALLOCATABLE, dimension(:) :: dummy,ilc,vband,mask
