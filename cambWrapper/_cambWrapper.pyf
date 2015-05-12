@@ -1,0 +1,45 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module _cambWrapper ! in 
+    interface  ! in :_cambWrapper
+        module cambwrapper ! in :_cambWrapper:source/CambWrapper.f90
+            use cambwrappercore
+
+            double precision, allocatable,dimension(:,:) :: matter_power_kh
+            real, allocatable,dimension(:,:,:) :: matter_power
+
+
+            subroutine computecmbpowerspectrum(values,cl_tt,cl_te,cl_ee,cl_bb,lmax) ! in :_cambWrapper:source/CambWrapper.f90:cambwrapper
+                real(kind=8) dimension(6),intent(in) :: values
+                real(kind=8) dimension(lmax - 1),intent(out),depend(lmax) :: cl_tt
+                real(kind=8) dimension(lmax - 1),intent(out),depend(lmax) :: cl_te
+                real(kind=8) dimension(lmax - 1),intent(out),depend(lmax) :: cl_ee
+                real(kind=8) dimension(lmax - 1),intent(out),depend(lmax) :: cl_bb
+                integer :: lmax
+            end subroutine computecmbpowerspectrum
+
+            subroutine setupparams(inputfile,installpath,lmax) ! in :_cambWrapper:source/CambWrapper.f90:cambwrapper
+                character*1024 intent(in) :: inputfile
+                character*1024 intent(in) :: installpath
+                integer, intent(out) :: lmax
+            end subroutine setupparams
+
+            subroutine computeCambMatterPowerSpectrum(values,maxk,dlogk,nred,redshifts) ! in :_cambWrapper:source/CambWrapper.f90:cambwrapper
+                real(kind=8) dimension(6),intent(in) :: values
+                real intent(in) :: maxk
+                real intent(in) :: dlogk
+                integer, optional,intent(in),check(len(redshifts)>=nred),depend(redshifts) :: nred=len(redshifts)
+                double precision dimension(nred),intent(in) :: redshifts
+            end subroutine getpower
+
+            subroutine freematterpower ! in :_cambWrapper:source/CambWrapper.f90:cambwrapper
+            end subroutine freematterpower
+
+
+        end module cambwrapper
+    end interface 
+end python module _cambWrapper
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

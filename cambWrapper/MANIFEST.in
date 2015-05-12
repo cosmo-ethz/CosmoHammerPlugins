@@ -1,0 +1,19 @@
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include HISTORY.rst
+include LICENSE 
+include README.rst 
+include CAMB_LICENSE 
+include _cambWrapper.pyf 
+include cambWrapper/camb/*.ini 
+include get_camb.sh
+include Makefile
+recursive-include docs *.rst *.py *.png Makefile
+recursive-include docs/_theme *
+recursive-include test/*
+
+exclude .settings/* 
+exclude .pydevproject 
+exclude .cproject 
+exclude .project 
+exclude camb/*

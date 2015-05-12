@@ -1,0 +1,15 @@
+/build
+/camb
+/cambWrapper.egg-info
+/dist
+*.pyc
+/dist
+/cambWrapper.egg-info
+/camb
+/build
+/camb_new
+/CAMB.tar.gz
+/.DS_Store
+/_dummy.pyf
+/_cambWrapper-f2pywrappers2.f90
+/_cambWrappermodule.c
