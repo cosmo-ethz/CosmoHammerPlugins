@@ -5,7 +5,7 @@ CambWrapper is a python wrapper for the Fortan90 code of CAMB.
 .. note:: This wrapper is no longer compatible with the current version of CAMB. 
 
 
-.. image:: spectrum.png
+.. image:: https://raw.githubusercontent.com/cosmo-ethz/CosmoHammerPlugins/master/cambWrapper/docs/spectrum.png
    :alt: Possible outputs of cambWrapper.
    :align: left
 
