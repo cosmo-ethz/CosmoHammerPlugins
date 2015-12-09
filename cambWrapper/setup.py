@@ -1,105 +1,74 @@
 #!/usr/bin/env python
-# encoding: utf-8
 
-import setuptools
+import os
 import sys
-from numpy.distutils.core import setup
+from setuptools.command.test import test as TestCommand
+from setuptools import find_packages
+
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 
-####
-#Gfortran compiler, no optimization:
-####
-# include_dirs = []
-# extra_f90_compile_args=[]
-# extra_link_args=[]
-
-####
-#Intel composer ifort + mkl, -openmp toggles mutli-processor:
-####
-# include_dirs = "${MKLROOT}/include"
-# extra_f90_compile_args=["-O3 -W0 -WB -openmp -fpp -vec_report0 -mkl=parallel -fPIC"]
-# MKLLIBS="${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a"
-# extra_link_args=["-Wl,--start-group",  MKLLIBS, " -Wl,--end-group -openmp"]
-
-####
-#Intel composer ifort + mkl for Mac OS X:
-####
-include_dirs = "${MKLROOT}/include"
-extra_f90_compile_args=["-O3 -W0 -WB -openmp -fpp -vec_report0 -fPIC"]
-extra_link_args=["${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm"]
+if sys.argv[-1] == 'publish':
+    os.system('python setup.py sdist upload')
+    sys.exit()
 
 
-if '--nonstop' in sys.argv:
-    sys.argv.remove('--nonstop')
-    from nonstopf2py import f2py
-else:
-    from numpy import f2py
+class PyTest(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
 
-#generate wrappring code
-f2py.run_main(['-m', '_cambWrapper', '-h', '--overwrite-signature', '_dummy.pyf', 'source/CambWrapper.f90'])
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
 
 
-desc = open("README.rst").read()
+readme = open('README.rst').read()
+doclink = """
+Documentation
+-------------
 
+The full documentation can be generated with Sphinx"""
 
-def configuration(parent_package='',top_path=None):
-    from numpy.distutils.misc_util import Configuration
-    config = Configuration("cambWrapper", parent_package, top_path,
-                           namespace_packages = ['cambWrapper'],
-                           version='0.2.2',
-                           author  = 'Joel Akeret',
-                           author_email="jakeret@phys.ethz.ch",
-                           description = "Wrapper for the Code for Anisotropies in the Microwave Background",
-                           url="http://refreweb.phys.ethz.ch/software/cambWrapper-0.2.2",
-                           long_description = desc,
-                           license="GPLv3")
+history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-    config.add_extension('_cambWrapper',
-                         sources=[
-                            'camb/constants.f90',
-                            'camb/utils.F90',
-                            'camb/subroutines.f90',
-                            'camb/inifile.f90',
-                            'camb/power_tilt.f90',
-                            'camb/recfast.f90',
-                            'camb/reionization.f90',
-                            'camb/modules.f90',
-                            'camb/bessels.f90',
-                            'camb/equations.f90',
-                            'camb/halofit.f90',
-                            'camb/lensing.f90',
-                            'camb/SeparableBispectrum.F90',
-                            'camb/cmbmain.f90',
-                            'camb/camb.f90',
-                            'source/CambWrapperCore.f90',
-                            'source/CambWrapper.f90',
-                            '_cambWrapper.pyf'] ,
-            include_dirs = include_dirs,
-            libraries = [],
-            extra_f90_compile_args=extra_f90_compile_args,
-            extra_link_args=extra_link_args)
+requires = ["numpy", "cosmoHammer"] #during runtime
+tests_require=['pytest>=2.3'] #for testing
 
-    return config
+PACKAGE_PATH = os.path.abspath(os.path.join(__file__, os.pardir))
 
-required = ["numpy>1.6.2"]
-
-setup(configuration=configuration,
-        packages = setuptools.find_packages(),
-        include_package_data = True,
-        platforms = ["any"],
-        install_requires=required,
-        package_data={"": ["LICENSE"]},
-        data_files = [('cambWrapper/camb', ["cambWrapper/camb/params.ini"]),
-                      ('cambWrapper', ['camb/HighLExtrapTemplate_lenspotentialCls.dat'])],
-        zip_safe = False,
-        keywords="cambWrapper, CAMB, Code for Anisotropies in the Microwave Background",
-        classifiers=[
-        "Development Status :: 3 - Alpha",
+setup(
+    name='pycambWrapper',
+    version='0.1.0',
+    description='CosmoHammer adapter for PyCamb',
+    long_description=readme + '\n\n' + doclink + '\n\n' + history,
+    author='Joel Akeret',
+    author_email='jakeret@phys.ethz.ch',
+    url='http://www.astro.ethz.ch/refregier/research/index',
+    packages=find_packages(PACKAGE_PATH, "test"),
+    package_dir={'pycambWrapper': 'pycambWrapper'},
+    include_package_data=True,
+    install_requires=requires,
+    license='Proprietary',
+    zip_safe=False,
+    keywords='pycambWrapper',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
         "Intended Audience :: Science/Research",
-        "Programming Language :: Python",
-        "Programming Language :: Fortran",
+        'Intended Audience :: Developers',
+        'License :: Other/Proprietary License',
         'Natural Language :: English',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-    ])
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+    ],
+    tests_require=tests_require,
+    cmdclass = {'test': PyTest},
+)

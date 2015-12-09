@@ -14,3 +14,4 @@ CL_TE_KEY = "key_cl_te"
 CL_EE_KEY = "key_cl_ee"
 CL_BB_KEY = "key_cl_bb"
 
+from .CambCoreModule import CambCoreModule

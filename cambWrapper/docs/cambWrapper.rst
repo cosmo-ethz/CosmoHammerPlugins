@@ -1,27 +1,22 @@
-cambWrapper Package
+cambWrapper package
 ===================
 
-:mod:`cambWrapper` Package
---------------------------
+Submodules
+----------
 
-.. automodule:: cambWrapper.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`CambCoreModule` Module
-----------------------------
+cambWrapper.CambCoreModule module
+---------------------------------
 
 .. automodule:: cambWrapper.CambCoreModule
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`cambWrapperManager` Module
---------------------------------
 
-.. automodule:: cambWrapper.cambWrapperManager
+Module contents
+---------------
+
+.. automodule:: cambWrapper
     :members:
     :undoc-members:
     :show-inheritance:
-
