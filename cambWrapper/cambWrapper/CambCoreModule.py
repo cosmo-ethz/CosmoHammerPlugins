@@ -6,6 +6,7 @@ import camb
 
 from cambWrapper import CL_TT_KEY, CL_TE_KEY, CL_EE_KEY, CL_BB_KEY
 
+
 DEFAULT_COSMO_MAPPING = {"H0": 0,
                          "ombh2": 1,
                          "omch2": 2,
@@ -74,8 +75,8 @@ class CambCoreModule(object):
             ctx.add(CL_TE_KEY, powers[2:,3])
             ctx.add(CL_EE_KEY, powers[2:,1])
             ctx.add(CL_BB_KEY, powers[2:,2])
-        except RuntimeError:
-            getLogger().warn("Runtime error catched from the camb so. Used params [%s]"%( ", ".join([str(i) for i in p]) ) )
+        except camb.baseconfig.CAMBError:
+            getLogger().warn("CAMBError catched. Used params [%s]"%( ", ".join([str(i) for i in p]) ) )
             raise LikelihoodComputationException()
 
     def setup(self):
