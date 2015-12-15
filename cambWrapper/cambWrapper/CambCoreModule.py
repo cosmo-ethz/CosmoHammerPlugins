@@ -31,6 +31,8 @@ class CambCoreModule(object):
     name used in InitPower.set_params routine of CAMBparams instance
     :param init_constants: (optional) dict of default values for parameters in
     InitPower.set_params that are fixed; default: default values from CAMB
+    :param lmax: (optional) maximum ell of the CMB spectra to be stored in
+    the context; default: set to max_l of CAMBparams instance. 
     """
     
     def __init__(self, CAMBparams = None, cosmo_mapping=DEFAULT_COSMO_MAPPING, 
