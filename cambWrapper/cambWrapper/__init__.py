@@ -5,7 +5,7 @@ Wraps the computation of the cmb power spectrum computation from CAMB
 # Author:  Joel Akeret
 # Contact: jakeret@phys.ethz.ch
 
-__version__   = '0.2.2'
+__version__   = '0.3.0'
 __author__    = 'Joel Akeret'
 __credits__   = 'Institute of Astronomy ETHZ, Institute of 4D Technologies and Data Spaces FHNW'
 

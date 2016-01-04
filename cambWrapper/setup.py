@@ -11,11 +11,6 @@ except ImportError:
     from distutils.core import setup
 
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
-
-
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -29,12 +24,6 @@ class PyTest(TestCommand):
 
 
 readme = open('README.rst').read()
-doclink = """
-Documentation
--------------
-
-The full documentation can be generated with Sphinx"""
-
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requires = ["numpy", "cosmoHammer", "camb"] #during runtime
@@ -43,10 +32,10 @@ tests_require=['pytest>=2.3'] #for testing
 PACKAGE_PATH = os.path.abspath(os.path.join(__file__, os.pardir))
 
 setup(
-    name='pycambWrapper',
-    version='0.1.0',
-    description='CosmoHammer adapter for PyCamb',
-    long_description=readme + '\n\n' + doclink + '\n\n' + history,
+    name='cambWrapper',
+    version='0.3.0',
+    description='CosmoHammer adapter for Camb',
+    long_description=readme + '\n\n' + history,
     author='Joel Akeret',
     author_email='jakeret@phys.ethz.ch',
     url='http://www.astro.ethz.ch/refregier/research/index',
@@ -66,8 +55,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
     ],
     tests_require=tests_require,
     cmdclass = {'test': PyTest},

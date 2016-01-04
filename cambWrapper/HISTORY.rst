@@ -1,5 +1,9 @@
 .. :changelog:
 
+0.3.0 (2016-01-04)
+++++++++++++++++++
+- Support for official python bindings for CAMB by Anthony Lewis
+
 0.2.2 (2013-02-11)
 ++++++++++++++++++
 - Updated documentation
